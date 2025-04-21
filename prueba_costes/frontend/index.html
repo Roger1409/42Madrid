@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Obras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Obras</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Obras</a></li>
+                <li><a href="#">Promotores</a></li>
+                <li><a href="#">Facturas</a></li>
+                <li><a href="#">Certificaciones</a></li>
+                <li><a href="#">Cobros</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="listado-obras">
+            <h2>Listado de Obras</h2>
+            <button id="btn-crear-obra">Crear Nueva Obra</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Obra</th>
+                        <th>Nombre</th>
+                        <th>ID Promotor</th>
+                        <th>Importe Contrato</th>
+                        <th>Aval Bancario</th>
+                        <th>Fecha Inicio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-obras"></tbody>
+            </table>
+        </section>
+
+        <section id="formulario-obra" style="display: none;">
+            <h2>Crear/Editar Obra</h2>
+            <form id="form-obra">
+                <input type="hidden" id="id_obra_editar" name="id_obra_editar" value="">
+                <div>
+                    <label for="id_obra">ID Obra:</label>
+                    <input type="text" id="id_obra" name="id_obra" required>
+                </div>
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div>
+                    <label for="id_promotor">ID Promotor:</label>
+                    <input type="text" id="id_promotor" name="id_promotor">
+                </div>
+                <div>
+                    <label for="importe_contrato">Importe Contrato:</label>
+                    <input type="number" id="importe_contrato" name="importe_contrato" step="0.01">
+                </div>
+                <div>
+                    <label for="aval_bancario">Aval Bancario:</label>
+                    <input type="number" id="aval_bancario" name="aval_bancario" step="0.01">
+                </div>
+                <div>
+                    <label for="fecha_inicio">Fecha Inicio:</label>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio">
+                </div>
+                <div class="botones">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btn-cancelar-obra">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="listado-promotores">
+            <h2>Listado de Promotores</h2>
+            <button id="btn-crear-promotor">Crear Nuevo Promotor</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Promotor</th>
+                        <th>Nombre</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-promotores"></tbody>
+            </table>
+        </section>
+
+        <section id="formulario-promotor" style="display: none;">
+            <h2>Crear/Editar Promotor</h2>
+            <form id="form-promotor">
+                <div>
+                    <label for="id_promotor">ID Promotor:</label>
+                    <input type="number" id="id_promotor" name="id_promotor" required>
+                </div>
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="botones">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btn-cancelar-promotor">Cancelar</button>
+                </div>
+                <input type="hidden" id="id_promotor_editar" name="id_promotor_editar" value="">
+            </form>
+        </section>
+
+        <section id="listado-facturas">
+            <h2>Listado de Facturas</h2>
+            <button id="btn-crear-factura">Crear Nueva Factura</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Obra</th>
+                        <th>ID Promotor</th>
+                        <th>ID Factura</th>
+                        <th>Descripción</th>
+                        <th>Importe Base</th>
+                        <th>Retención</th>
+                        <th>IVA</th>
+                        <th>Importe Total</th>
+                        <th>Fecha Emisión</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Observación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-facturas"></tbody>
+            </table>
+        </section>
+
+        <section id="formulario-factura" style="display: none;">
+            <h2>Crear/Editar Factura</h2>
+            <form id="form-factura">
+                <div>
+                    <label for="id_obra">ID Obra:</label>
+                    <input type="text" id="id_obra" name="id_obra">
+                </div>
+                <div>
+                    <label for="id_promotor">ID Promotor:</label>
+                    <input type="number" id="id_promotor" name="id_promotor">
+                </div>
+                <div>
+                    <label for="id_factura">ID Factura:</label>
+                    <input type="text" id="id_factura" name="id_factura" required>
+                </div>
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" id="descripcion" name="descripcion" required>
+                </div>
+                <div>
+                    <label for="importe_base">Importe Base:</label>
+                    <input type="number" id="importe_base" name="importe_base" step="0.01">
+                </div>
+                <div>
+                    <label for="retencion">Retención:</label>
+                    <input type="number" id="retencion" name="retencion" step="0.01" value="0.00">
+                </div>
+                <div>
+                    <label for="iva">IVA:</label>
+                    <input type="number" id="iva" name="iva" step="0.01">
+                </div>
+                <div>
+                    <label for="fecha_emision">Fecha Emisión:</label>
+                    <input type="date" id="fecha_emision" name="fecha_emision">
+                </div>
+                <div>
+                    <label for="fecha_vencimiento">Fecha Vencimiento:</label>
+                    <input type="date" id="fecha_vencimiento" name="fecha_vencimiento">
+                </div>
+                <div>
+                    <label for="observacion">Observación:</label>
+                    <textarea id="observacion" name="observacion"></textarea>
+                </div>
+                <div class="botones">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btn-cancelar-factura">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="listado-certificaciones">
+            <h2>Listado de Certificaciones</h2>
+            <button id="btn-crear-certificacion">Crear Nueva Certificación</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Obra</th>
+                        <th>ID Cert</th>
+                        <th>ID Factura</th>
+                        <th>Descripción</th>
+                        <th>Importe</th>
+                        <th>Fecha Envío DF</th>
+                        <th>Fecha Aprobación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-certificaciones"></tbody>
+            </table>
+        </section>
+
+        <section id="formulario-certificacion" style="display: none;">
+            <h2>Crear/Editar Certificación</h2>
+            <form id="form-certificacion">
+                <div>
+                    <label for="id_obra">ID Obra:</label>
+                    <input type="text" id="id_obra" name="id_obra">
+                </div>
+                <div>
+                    <label for="id_cert">ID Certificación:</label>
+                    <input type="number" id="id_cert" name="id_cert" required>
+                </div>
+                <div>
+                    <label for="id_factura">ID Factura:</label>
+                    <input type="text" id="id_factura" name="id_factura">
+                </div>
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" id="descripcion" name="descripcion" required>
+                </div>
+                <div>
+                    <label for="importe">Importe:</label>
+                    <input type="number" id="importe" name="importe" step="0.01">
+                </div>
+                <div>
+                    <label for="fecha_envio_df">Fecha Envío DF:</label>
+                    <input type="date" id="fecha_envio_df" name="fecha_envio_df">
+                </div>
+                <div>
+                    <label for="fecha_aprobacion">Fecha Aprobación:</label>
+                    <input type="date" id="fecha_aprobacion" name="fecha_aprobacion">
+                </div>
+                <div class="botones">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btn-cancelar-certificacion">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="listado-cobros">
+            <h2>Listado de Cobros</h2>
+            <button id="btn-crear-cobro">Crear Nuevo Cobro</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Factura</th>
+                        <th>ID Cobro</th>
+                        <th>Descripción</th>
+                        <th>Importe Base</th>
+                        <th>IVA</th>
+                        <th>Importe Total</th>
+                        <th>Fecha Emisión</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Fecha Efectivo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-cobros"></tbody>
+            </table>
+        </section>
+
+        <section id="formulario-cobro" style="display: none;">
+            <h2>Crear/Editar Cobro</h2>
+            <form id="form-cobro">
+                <div>
+                    <label for="id_factura">ID Factura:</label>
+                    <input type="text" id="id_factura" name="id_factura">
+                </div>
+                <div>
+                    <label for="id_cobro">ID Cobro:</label>
+                    <input type="number" id="id_cobro" name="id_cobro" required>
+                </div>
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" id="descripcion" name="descripcion" required>
+                </div>
+                <div>
+                    <label for="importe_base">Importe Base:</label>
+                    <input type="number" id="importe_base" name="importe_base" step="0.01">
+                </div>
+                <div>
+                    <label for="iva">IVA:</label>
+                    <input type="number" id="iva" name="iva" step="0.01">
+                </div>
+                <div>
+                    <label for="fecha_emision">Fecha Emisión:</label>
+                    <input type="date" id="fecha_emision" name="fecha_emision">
+                </div>
+                <div>
+                    <label for="fecha_vencimiento">Fecha Vencimiento:</label>
+                    <input type="date" id="fecha_vencimiento" name="fecha_vencimiento">
+                </div>
+                <div>
+                    <label for="fecha_efectivo">Fecha Efectivo:</label>
+                    <input type="date" id="fecha_efectivo" name="fecha_efectivo">
+                </div>
+                <div class="botones">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="btn-cancelar-cobro">Cancelar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Gestión de Facturación</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
