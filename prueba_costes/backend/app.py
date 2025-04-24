@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import mysql.connector  # O import pymysql si prefieres usar PyMySQL
+import mysql.connector
 
 app = Flask(__name__)
 CORS(app) # Esto habilitará CORS para permitir las peticiones desde el frontend
