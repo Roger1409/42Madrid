@@ -42,7 +42,7 @@ def get_obras():
         cursor.close()
         mydb.close()
         return jsonify({'error': f'Error al obtener las obras: {err}'}), 500
-    
+
 @app.route('/obras', methods=['POST'])
 def crear_obra():
     data = request.get_json()
@@ -106,7 +106,7 @@ def obtener_obra(id_obra):
         cursor.close()
         mydb.close()
         return jsonify({'error': f'Error al obtener la obra: {err}'}), 500
-    
+
 @app.route('/obras/<string:id_obra>', methods=['PUT'])
 def actualizar_obra(id_obra):
     data = request.get_json()
@@ -133,19 +133,23 @@ def actualizar_obra(id_obra):
         cursor.close()
         mydb.close()
         return jsonify({'error': f'Error al actualizar la obra: {err}'}), 500
-    
+
 @app.route('/promotores', methods=['GET'])
 def obtener_promotores():
     mydb = get_db_connection()
     if not mydb:
         return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
-    cursor = mydb.cursor()
-    cursor.execute("SELECT id_promotor, nombre FROM promotor")
-    promotores = cursor.fetchall()
-    cursor.close()
-    mydb.close()
-    promotores_lista = [{'id_promotor': p[0], 'nombre': p[1]} for p in promotores]
-    return jsonify(promotores_lista), 200
+    cursor = mydb.cursor(dictionary=True)
+    try:
+        cursor.execute("SELECT id_promotor, nombre FROM promotor")
+        promotores = cursor.fetchall()
+        cursor.close()
+        mydb.close()
+        return jsonify(promotores)
+    except mysql.connector.Error as err:
+        cursor.close()
+        mydb.close()
+        return jsonify({'error': f'Error al obtener los promotores: {err}'}), 500
 
 @app.route('/promotores', methods=['POST'])
 def crear_promotor():
@@ -172,15 +176,20 @@ def obtener_promotor(id_promotor):
     mydb = get_db_connection()
     if not mydb:
         return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
-    cursor = mydb.cursor()
-    cursor.execute("SELECT id_promotor, nombre FROM promotor WHERE id_promotor = %s", (id_promotor,))
-    promotor = cursor.fetchone()
-    cursor.close()
-    mydb.close()
-    if promotor:
-        return jsonify({'id_promotor': promotor[0], 'nombre': promotor[1]}), 200
-    else:
-        return jsonify({'message': f'Promotor con ID {id_promotor} no encontrado.'}), 404
+    cursor = mydb.cursor(dictionary=True)
+    try:
+        cursor.execute("SELECT id_promotor, nombre FROM promotor WHERE id_promotor = %s", (id_promotor,))
+        promotor = cursor.fetchone()
+        cursor.close()
+        mydb.close()
+        if promotor:
+            return jsonify(promotor), 200
+        else:
+            return jsonify({'message': f'Promotor con ID {id_promotor} no encontrado.'}), 404
+    except mysql.connector.Error as err:
+        cursor.close()
+        mydb.close()
+        return jsonify({'error': f'Error al obtener el promotor: {err}'}), 500
 
 @app.route('/promotores/<int:id_promotor>', methods=['PUT'])
 def actualizar_promotor(id_promotor):
@@ -211,7 +220,7 @@ def eliminar_promotor(id_promotor):
         return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
     cursor = mydb.cursor()
     try:
-        cursor.execute("DELETE FROM WHERE id_promotor=%s", (id_promotor,))
+        cursor.execute("DELETE FROM promotor WHERE id_promotor=%s", (id_promotor,))
         mydb.commit()
         cursor.close()
         mydb.close()
