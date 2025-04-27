@@ -169,18 +169,32 @@ def crear_promotor():
 
 @app.route('/promotores/<int:id_promotor>', methods=['GET'])
 def obtener_promotor(id_promotor):
+    print(f"Obteniendo datos del promotor con ID: {id_promotor}")  # Log del ID recibido
     mydb = get_db_connection()
     if not mydb:
+        print("No se pudo obtener la conexión a la base de datos.") # Log de error de conexión
         return jsonify({'error': 'No se pudo conectar a la base de datos'}), 500
     cursor = mydb.cursor()
-    cursor.execute("SELECT id_promotor, nombre FROM promotor WHERE id_promotor = %s", (id_promotor,))
-    promotor = cursor.fetchone()
-    cursor.close()
-    mydb.close()
-    if promotor:
-        return jsonify({'id_promotor': promotor[0], 'nombre': promotor[1]}), 200
-    else:
-        return jsonify({'message': f'Promotor con ID {id_promotor} no encontrado.'}), 404
+    query = "SELECT id_promotor, nombre FROM promotor WHERE id_promotor = %s"
+    values = (id_promotor,)
+    print(f"Ejecutando la consulta: {query} con valores: {values}") # Log de la consulta
+    try:
+        cursor.execute(query, values)
+        promotor = cursor.fetchone()
+        print(f"Resultado de la consulta: {promotor}") # Log del resultado de la consulta
+        cursor.close()
+        mydb.close()
+        if promotor:
+            return jsonify({'id_promotor': promotor[0], 'nombre': promotor[1]}), 200
+        else:
+            print(f"No se encontró promotor con ID: {id_promotor}") # Log de promotor no encontrado
+            return jsonify({'message': f'Promotor con ID {id_promotor} no encontrado.'}), 404
+    except mysql.connector.Error as err:
+        print(f"Error al ejecutar la consulta: {err}") # Log del error de la consulta
+        if mydb and mydb.is_connected():
+            cursor.close()
+            mydb.close()
+        return jsonify({'error': f'Error al obtener el promotor: {err}'}), 500
 
 @app.route('/promotores/<int:id_promotor>', methods=['PUT'])
 def actualizar_promotor(id_promotor):
@@ -225,4 +239,4 @@ def eliminar_promotor(id_promotor):
         return jsonify({'error': f'Error al eliminar el promotor: {err}'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
