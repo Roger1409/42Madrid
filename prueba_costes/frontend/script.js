@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cargarObras() {
-        fetch('http://127.0.0.1:5000/obras')
+        fetch('http://127.0.0.1:5001/obras')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cargarFormularioObra(idObra) {
-        fetch(`http://127.0.0.1:5000/obras/${idObra}`)
+        fetch(`http://127.0.0.1:5001/obras/${idObra}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function eliminarObra(idObra) {
-        fetch(`http://127.0.0.1:5000/obras/${idObra}`, {
+        fetch(`http://127.0.0.1:5001/obras/${idObra}`, {
             method: 'DELETE',
         })
             .then(response => {
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const idObraEditar = document.getElementById('id_obra_editar').value;
             const method = idObraEditar ? 'PUT' : 'POST';
-            const url = idObraEditar ? `http://127.0.0.1:5000/obras/${idObraEditar}` : 'http://127.0.0.1:5000/obras';
+            const url = idObraEditar ? `http://127.0.0.1:5001/obras/${idObraEditar}` : 'http://127.0.0.1:5001/obras';
 
             fetch(url, {
                 method: method,
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cargarPromotores() {
-        fetch('http://127.0.0.1:5000/promotores')
+        fetch('http://127.0.0.1:5001/promotores')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cargarFormularioPromotor(idPromotor) {
-        fetch(`http://127.0.0.1:5000/promotores/${idPromotor}`)
+        fetch(`http://127.0.0.1:5001/promotores/${idPromotor}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function eliminarPromotor(idPromotor) {
-        fetch(`http://127.0.0.1:5000/promotores/${idPromotor}`, {
+        fetch(`http://127.0.0.1:5001/promotores/${idPromotor}`, {
             method: 'DELETE',
         })
             .then(response => {
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const idPromotorEditar = document.getElementById('id_promotor_editar').value;
             const method = idPromotorEditar ? 'PUT' : 'POST';
-            const url = idPromotorEditar ? `http://127.0.0.1:5000/promotores/${idPromotorEditar}` : 'http://127.0.0.1:5000/promotores';
+            const url = idPromotorEditar ? `http://127.0.0.1:5001/promotores/${idPromotorEditar}` : 'http://127.0.0.1:5001/promotores';
 
             fetch(url, {
                 method: method,
